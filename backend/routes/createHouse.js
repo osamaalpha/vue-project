@@ -33,4 +33,5 @@ module.exports = (request, response) => {
     .then((res) => {
       return response.send(res.data)
     })
+    .catch((err) => console.error(err))
 }

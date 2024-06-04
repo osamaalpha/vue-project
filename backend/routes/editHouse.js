@@ -1,7 +1,37 @@
 const myApi = require('../myApi')
 
 module.exports = (request, response) => {
-  myApi.post(`/${Number(request.query.id)}`).then((res) => {
-    return response.send(res.data)
-  })
+  const {
+    price,
+    bedrooms,
+    bathrooms,
+    size,
+    streetName,
+    houseNumber,
+    numberAddition,
+    zip,
+    city,
+    constructionYear,
+    hasGarage,
+    description
+  } = request.body
+  myApi
+    .post(`/${Number(request.query.id)}`, {
+      price,
+      bedrooms,
+      bathrooms,
+      size,
+      streetName,
+      houseNumber,
+      numberAddition,
+      zip,
+      city,
+      constructionYear,
+      hasGarage,
+      description
+    })
+    .then((res) => {
+      return response.send(res.data)
+    })
+    .catch((err) => console.error(err))
 }

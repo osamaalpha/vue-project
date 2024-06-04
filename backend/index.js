@@ -6,6 +6,18 @@ const getHouse = require('./routes/getHouse')
 const uploadImage = require('./routes/uploadImage')
 const deleteHouse = require('./routes/deleteHouse')
 const editHouse = require('./routes/editHouse')
+const multer = require('multer')
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    return cb(null, './public/images')
+  },
+  filename: function (req, file, cb) {
+    return cb(null, `${Date.now()}_${file.originalname}`)
+  }
+})
+
+const upload = multer({ storage })
 
 const app = express()
 const port = 8080
@@ -17,7 +29,7 @@ app.use('/api/createHouse', createHouse)
 
 app.use('/api/getHouse', getHouse)
 
-app.use('/api/uploadImage', uploadImage)
+app.use('/api/uploadImage', upload.single('image'), uploadImage)
 
 app.use('/api/deleteHouse', deleteHouse)
 
